@@ -9,11 +9,11 @@ const PORT = process.env.PORT || 3000;
 
 const app = express();
 
-const corsOptions = { 
-  origin: process.env.MENTIONS_UNITED_SOURCE_DOMAIN,
-  optionsSuccessStatus: 200 
-}
-app.use(cors(corsOptions));
+// const corsOptions = { 
+//   origin: process.env.MENTIONS_UNITED_SOURCE_DOMAIN,
+//   optionsSuccessStatus: 200 
+// }
+app.use(cors());
 
 //////////////////////////////////////////////////////////////
 
