@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 
 const corsOptions = { 
-  origin: [ "localhost", process.env.MENTIONS_UNITED_SOURCE_DOMAIN ],
+  origin: process.env.CORS_URLS.split(","),
   optionsSuccessStatus: 200 
 }
 app.use(cors(corsOptions));
@@ -22,7 +22,7 @@ const pixelfedProxy = createProxyMiddleware({
   changeOrigin: true,
   pathRewrite: (path, req) => { 
     if (process.env.LOG) { console.log("Proxying " + process.env.PIXELFED_API_URL + path); }
-    return path.replace("/pixelfed", "")
+    return path.replace("/pixelfed", "");
   },
   headers: { Authorization: "Bearer " + process.env.PIXELFED_API_TOKEN }
 });
