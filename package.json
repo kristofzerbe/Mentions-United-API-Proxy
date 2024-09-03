@@ -1,0 +1,18 @@
+{
+  "name": "mentions-united-api-proxy",
+  "version": "1.0.0",
+  "description": "Proxy server to hide public API keys of calls from MentionsUnited Provider scripts",
+  "author": "Kristof Zerbe",
+  "license": "MIT",
+  "type": "module",
+  "main": "app.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev" : "nodemon server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2"
+  }
+}
