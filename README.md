@@ -1,3 +1,3 @@
-# MentionsUnited API-Proxy
+# Mentions United API-Proxy
 
-**Proxy server to hide public API keys of calls from MentionsUnited Provider scripts**
+**Proxy Node.js app to hide public API keys of calls from Mentions United Provider plugins**
