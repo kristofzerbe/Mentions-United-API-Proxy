@@ -17,19 +17,28 @@ app.use(cors(corsOptions));
 
 //////////////////////////////////////////////////////////////
 
-const pixelfedProxy = createProxyMiddleware({
-  target: process.env.PIXELFED_API_URL,
-  changeOrigin: true,
-  pathRewrite: (path, req) => { 
-    if (process.env.LOG) { console.log("Proxying " + process.env.PIXELFED_API_URL + path); }
-    return path.replace("/pixelfed", "");
-  },
-  headers: { Authorization: "Bearer " + process.env.PIXELFED_API_TOKEN }
-});
-app.use('/pixelfed', pixelfedProxy);
+function getProxy(providerName) {
+  return createProxyMiddleware({
+    target: process.env[providerName.toUpperCase() + "_API_URL"],
+    changeOrigin: true,
+    pathRewrite: (path, req) => {
+      if (process.env.LOG) { console.log("Proxying " + process.env[providerName.toUpperCase() + "_API_URL"] + path); }
+      return path.replace("/" + providerName, "");
+    },
+    headers: { Authorization: "Bearer " + process.env[providerName.toUpperCase() + "_API_TOKEN"] }
+  });
+}
+
+// ---------------------------------------------
+
+const provider = ["pixelfed", "mastodon"];
+
+provider.forEach((key) => {
+  app.use("/" + key, getProxy(key));
+})
 
 //////////////////////////////////////////////////////////////
 
 app.listen(PORT, () => {
-  console.log(`API Proxy listening on port ${PORT}`);
+  console.log(`API Proxy listening on port ${PORT} for ${provider.join(", ")}`);
 });

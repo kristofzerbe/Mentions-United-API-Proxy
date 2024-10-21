@@ -54,18 +54,21 @@ The following settings are mandatory:
 | **LOG** | Output of the proxied URL's (true/false) |
 | **CORS_URLS** | Comma-separated list of allowed base URL's<br>(e.g: "http://localhost:4000,https://kiko.io") |
 
-## Provider
+## Providers
 
-Currently just one Provider is implemented for proxying the requests, but more will come as the **Mentions United** project grows. Every Provider has its own implementation in ``app.js``.
+The implementation has been slightly refactored in the current version, as they do not differ for each provider. The list of providers in the ``app.js`` currently contains:
 
-### Pixelfed
+- **pixelfed**
+- **mastodon**
 
-Required environment variables:
+Required environment variables for each provider:
 
 | Name  | Description |
 | --- | --- |
-| **PIXELFED_API_URL** | Base URL of the Pixelfed instance<br>(e.g. "https://pixelfed.social") |
-| **PIXELFED_API_TOKEN** | Read-Only Bearer Token, which can be generated on the Pixelfed instance under *Settings > Applications > Personal Access Tokens* |
+| *&lt;**PROVIDERNAME**&gt;***_API_URL** | Base URL of the Pixelfed instance<br>(e.g. "https://pixelfed.social") |
+| *&lt;**PROVIDERNAME**&gt;***_API_TOKEN** | Read-Only Bearer Token / Access Token |
+
+Every provider has a menu item 'Development' or 'Applications' somewhere in the account settings, where you can generate an appropriate access token. With Pixelfed, for example, this is under *Settings > Applications > Personal Access Tokens*
 
 ## Hosting
 
