@@ -31,7 +31,7 @@ function getProxy(provider) {
 
 // ---------------------------------------------
 
-for(provider in process.env.PROVIDERS.split(",")) {
+for(provider of process.env.PROVIDERS.split(",")) {
   app.use("/" + provider, getProxy(provider));
 }
 
