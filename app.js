@@ -6,38 +6,34 @@ import { createProxyMiddleware } from 'http-proxy-middleware';
 dotenv.config();
 
 const PORT = process.env.PORT || 3000;
+const LOG = process.env.LOG || false;
 
 const app = express();
 
-const corsOptions = { 
+app.use(cors({ 
   origin: process.env.CORS_URLS.split(","),
   optionsSuccessStatus: 200
-}
-app.use(cors(corsOptions));
+}));
 
 //////////////////////////////////////////////////////////////
 
-function getProxy(providerName) {
+function getProxy(provider) {
   return createProxyMiddleware({
-    target: process.env[providerName.toUpperCase() + "_API_BASEURL"],
+    target: process.env[provider.toUpperCase() + "_API_BASEURL"],
     changeOrigin: true,
     pathRewrite: (path, req) => {
-      if (process.env.LOG) { 
-        console.log("Proxying " + process.env[providerName.toUpperCase() + "_API_BASEURL"] + path); 
-      }
-      return path.replace("/" + providerName, "");
+      if (LOG) { console.log("Proxying " + process.env[provider.toUpperCase() + "_API_BASEURL"] + path); }
+      return path.replace("/" + provider, "");
     },
-    headers: { Authorization: "Bearer " + process.env[providerName.toUpperCase() + "_API_TOKEN"] }
+    headers: { Authorization: "Bearer " + process.env[provider.toUpperCase() + "_API_TOKEN"] }
   });
 }
 
 // ---------------------------------------------
 
-const provider = process.env.PROVIDERS.split(",");
-
-provider.forEach((key) => {
-  app.use("/" + key, getProxy(key));
-})
+for(provider in process.env.PROVIDERS.split(",")) {
+  app.use("/" + provider, getProxy(provider));
+}
 
 //////////////////////////////////////////////////////////////
 
