@@ -1,5 +1,5 @@
-import express from "express";
 import dotenv from "dotenv";
+import express from "express";
 import cors from "cors";
 import { createProxyMiddleware } from 'http-proxy-middleware';
 
@@ -22,9 +22,7 @@ function getProxy(provider) {
     target: process.env[provider.toUpperCase() + "_API_BASEURL"],
     changeOrigin: true,
     pathRewrite: (path, req) => {
-      if (LOG) { 
-        console.log("Proxying " + process.env[provider.toUpperCase() + "_API_BASEURL"] + path); 
-      }
+      if (LOG) { console.log("Proxying " + process.env[provider.toUpperCase() + "_API_BASEURL"] + path); }
       return path.replace("/" + provider, "");
     },
     headers: { Authorization: "Bearer " + process.env[provider.toUpperCase() + "_API_TOKEN"] }
