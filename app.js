@@ -22,7 +22,9 @@ function getProxy(provider) {
     target: process.env[provider.toUpperCase() + "_API_BASEURL"],
     changeOrigin: true,
     pathRewrite: (path, req) => {
-      if (LOG) { console.log("Proxying " + process.env[provider.toUpperCase() + "_API_BASEURL"] + path); }
+      if (LOG) { 
+        console.log("Proxying " + process.env[provider.toUpperCase() + "_API_BASEURL"] + path); 
+      }
       return path.replace("/" + provider, "");
     },
     headers: { Authorization: "Bearer " + process.env[provider.toUpperCase() + "_API_TOKEN"] }
@@ -31,12 +33,12 @@ function getProxy(provider) {
 
 // ---------------------------------------------
 
-for(const provider of process.env.PROVIDERS.split(",")) {
+for (const provider of process.env.PROVIDERS.split(",")) {
   app.use("/" + provider, getProxy(provider));
 }
 
 //////////////////////////////////////////////////////////////
 
 app.listen(PORT, () => {
-  console.log(`API Proxy listening on port ${PORT} for ${provider.join(", ")}`);
+  console.log(`API Proxy listening on port ${PORT} for ${process.env.PROVIDERS}`);
 });
