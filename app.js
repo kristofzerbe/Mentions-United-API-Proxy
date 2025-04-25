@@ -11,7 +11,7 @@ const app = express();
 
 const corsOptions = { 
   origin: process.env.CORS_URLS.split(","),
-  optionsSuccessStatus: 200 
+  optionsSuccessStatus: 200
 }
 app.use(cors(corsOptions));
 
@@ -19,10 +19,12 @@ app.use(cors(corsOptions));
 
 function getProxy(providerName) {
   return createProxyMiddleware({
-    target: process.env[providerName.toUpperCase() + "_API_URL"],
+    target: process.env[providerName.toUpperCase() + "_API_BASEURL"],
     changeOrigin: true,
     pathRewrite: (path, req) => {
-      if (process.env.LOG) { console.log("Proxying " + process.env[providerName.toUpperCase() + "_API_URL"] + path); }
+      if (process.env.LOG) { 
+        console.log("Proxying " + process.env[providerName.toUpperCase() + "_API_BASEURL"] + path); 
+      }
       return path.replace("/" + providerName, "");
     },
     headers: { Authorization: "Bearer " + process.env[providerName.toUpperCase() + "_API_TOKEN"] }
@@ -31,7 +33,7 @@ function getProxy(providerName) {
 
 // ---------------------------------------------
 
-const provider = ["pixelfed", "mastodon"];
+const provider = process.env.PROVIDERS.split(",");
 
 provider.forEach((key) => {
   app.use("/" + key, getProxy(key));

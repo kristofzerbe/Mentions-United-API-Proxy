@@ -1,4 +1,4 @@
-<p align="right" style="margin-bottom:0">
+<p align="center" style="margin-bottom:0">
   <img src="_attachments/mentions-united.svg" width="90" height="120">
   <img src="_attachments/proxy.svg" width="110" height="112">
 </p>
@@ -53,19 +53,15 @@ The following settings are mandatory:
 | **PORT** | Port number the app listens (default = 3000) |
 | **LOG** | Output of the proxied URL's (true/false) |
 | **CORS_URLS** | Comma-separated list of allowed base URL's<br>(e.g: "http://localhost:4000,https://kiko.io") |
+|**PROVIDERS**|Comma-separated list of supported providers<br>(e.g. "pixelfed,mastodon,peertube")|
 
 ## Providers
 
-The implementation has been slightly refactored in the current version, as they do not differ for each provider. The list of providers in the ``app.js`` currently contains:
-
-- **pixelfed**
-- **mastodon**
-
-Required environment variables for each provider:
+Each provider defined in the **PROVIDERS** list, requires a set of two additional environment variables:
 
 | Name  | Description |
 | --- | --- |
-| *&lt;**PROVIDERNAME**&gt;***_API_URL** | Base URL of the Pixelfed instance<br>(e.g. "https://pixelfed.social") |
+| *&lt;**PROVIDERNAME**&gt;***_API_BASEURL** | Base URL of the API of the provider instance<br>(e.g. "https://pixelfed.social") |
 | *&lt;**PROVIDERNAME**&gt;***_API_TOKEN** | Read-Only Bearer Token / Access Token |
 
 Every provider has a menu item 'Development' or 'Applications' somewhere in the account settings, where you can generate an appropriate access token. With Pixelfed, for example, this is under *Settings > Applications > Personal Access Tokens*
