@@ -53,7 +53,7 @@ The following settings are mandatory:
 | **PORT** | Port number the app listens (default = 3000) |
 | **LOG** | Output of the proxied URL's (true/false) |
 | **CORS_URLS** | Comma-separated list of allowed base URL's<br>(e.g: "http://localhost:4000,https://kiko.io") |
-|**PROVIDERS**|Comma-separated list of supported providers<br>(e.g. "pixelfed,mastodon,peertube")|
+|**PROVIDERS**|Comma-separated list of supported providers<br>(e.g. "pixelfed,mastodon")|
 
 ## Providers
 
